@@ -46,10 +46,10 @@ class LearningAgent(Agent):
         else:
             self.t += 1
             # self.epsilon -= 0.05
-            # self.epsilon = 1.0 / (self.t ** 2)    # FF
-            # self.epsilon = 0.99 ** self.t
-            # self.epsilon = math.cos(0.01 * self.t)
-            self.epsilon = math.exp(0.01 * self.t * -1)
+            # self.epsilon = 0.998 ** self.t                # A 0.046
+            # self.epsilon = 1.0 / (0.00001 * self.t ** 2)  # B 0.042
+            self.epsilon = math.exp(0.002 * self.t * -1)    # C 0.046
+            # self.epsilon = math.cos(0.001 * self.t)       # D 0.034
 
         return None
 
@@ -68,7 +68,7 @@ class LearningAgent(Agent):
         ## TO DO ##
         ###########
         # Set 'state' as a tuple of relevant data for the agent
-        state = (waypoint, inputs['light'], inputs['left'], inputs['oncoming'])
+        state = (waypoint, inputs['light'], inputs['left'], inputs['oncoming'], inputs['right'])
 
         return state
 
@@ -103,7 +103,6 @@ class LearningAgent(Agent):
                 for action in self.valid_actions:
                     dict_state[action] = 0.0
                 self.Q[state] = dict_state
-
 
         return
 
@@ -173,7 +172,7 @@ def run():
     #   verbose     - set to True to display additional output from the simulation
     #   num_dummies - discrete number of dummy agents in the environment, default is 100
     #   grid_size   - discrete number of intersections (columns, rows), default is (8, 6)
-    env = Environment(verbose=False)
+    env = Environment()
     
     ##############
     # Create the driving agent
@@ -181,7 +180,7 @@ def run():
     #   learning   - set to True to force the driving agent to use Q-learning
     #    * epsilon - continuous value for the exploration factor, default is 1
     #    * alpha   - continuous value for the learning rate, default is 0.5 
-    agent = env.create_agent(LearningAgent, learning=True, alpha=0.1)
+    agent = env.create_agent(LearningAgent, learning=True)
     
     ##############
     # Follow the driving agent
@@ -198,7 +197,7 @@ def run():
     #   log_metrics  - set to True to log trial and simulation results to /logs
     #   optimized    - set to True to change the default log file name
     # sim = Simulator(env)
-    sim = Simulator(env, update_delay=0.01, display=False, log_metrics=True, optimized=True)
+    sim = Simulator(env, update_delay=0.001, display=False, log_metrics=True, optimized=True) 
     
     ##############
     # Run the simulator
@@ -206,7 +205,7 @@ def run():
     #   tolerance  - epsilon tolerance before beginning testing, default is 0.05 
     #   n_test     - discrete number of testing trials to perform, default is 0
     # sim.run()
-    sim.run(tolerance=0.05, n_test=10)
+    sim.run(tolerance=0.046, n_test=10)
 
 
 if __name__ == '__main__':
