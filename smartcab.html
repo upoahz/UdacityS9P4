@@ -11901,7 +11901,7 @@ div#notebook {
 <ul>
 <li>模拟过程中，智能出租车没有移动</li>
 <li>驾驶代理程序获得了正奖励或者负奖励</li>
-<li>交通灯颜色变红时获得正奖励，变绿时如果不堵车可能获得负奖励</li>
+<li>交通灯颜色变红时获得正奖励，变绿时with no oncoming traffic获得负奖励,with oncoming traffic获得正奖励</li>
 </ul>
 
 </div>
@@ -11936,7 +11936,7 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>回答：</strong></p>
 <ul>
-<li>1、<code>verbose</code>：True时控制台显示仿真详细的信息，False时不显示详细的信息；2、<code>num_dummies</code>：表示环境中旁边路过车辆的数目；3、<code>grid_size</code>：表示有m x n 个交叉路口。</li>
+<li>1、<code>verbose</code>：True时控制台显示仿真详细的信息，False时不显示详细的信息；2、<code>num_dummies</code>：表示环境中旁边路过车辆的数目；3、<code>grid_size</code>：表示有m x n 个交叉路口，m表示列，n表示行。</li>
 <li>调用<code>act()</code>这个函数</li>
 <li><code>render_text()</code>函数输出文本信息到终端；<code>render()</code>函数显示图形界面</li>
 <li><code>next_waypoint()</code>函数优先考虑东西方向</li>
@@ -12030,7 +12030,7 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>答案：</strong></p>
 <ul>
-<li>驾驶代理程序在33%-38%的时间里做出了不良决策，其中大约有10%造成了事故</li>
+<li>驾驶代理程序在33%-38%的时间里做出了不良决策，其中大约有25%造成了事故</li>
 <li>合理，可靠性在10-20%之间，因为代理是随机驾驶的</li>
 <li>得到了负数的奖励，受到了严重的惩罚</li>
 <li>随着试验数增加，结果输出无重大变化</li>
@@ -12093,7 +12093,7 @@ div#notebook {
 </ul>
 <p>放弃的特征：</p>
 <ul>
-<li><code>deadline</code>表示剩余时间，环境中对时间已经进行了处理，这个特征是连续的，增加后会大大增加状态空间，因此放弃;</li>
+<li><code>deadline</code>表示剩余时间，环境中对时间已经进行了处理，这个特征是连续的，增加后会大大增加状态空间，且deadline在实际中并不能使训练的效果提升，因此放弃;</li>
 </ul>
 
 </div>
@@ -12135,7 +12135,7 @@ div#notebook {
 <p>3*2*4*4*4=384，状态空间大小为384；一共有4种动作，代理可以在至少384*4=1536次训练后得到一个较好的策略，在可控范围内</p>
 <p>为什么我们这么强调对相同最大值的 action 的选择要随机呢？</p>
 <ul>
-<li>如果选择第一个最大的，会造成只使用前面最大的Value对应得Action，没有探索新的Action</li>
+<li>如果选择第一个最大的，会造成只使用前面最大的Value对应得Action，没有探索新的Action，我们需要更多的探索</li>
 </ul>
 
 </div>
@@ -12303,7 +12303,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Load the &#39;sim_improved-learning&#39; file from the improved Q-Learning simulation</span>
@@ -12382,7 +12382,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># self.epsilon = 0.998 ** self.t   # tolerance = 0.046</span>
@@ -12420,7 +12420,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># self.epsilon = 1.0 / (0.00001 * self.t ** 2)   # tolerance = 0.042</span>
@@ -12458,7 +12458,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># self.epsilon = math.cos(0.001 * self.t)   # tolerance = 0.034</span>
